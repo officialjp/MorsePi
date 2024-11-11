@@ -6,6 +6,7 @@
 
 
 #include <stdio.h>
+#include <time.h>
 #include <string.h>
 #include "pico/stdlib.h"
 #include "includes/seven_segment.h"
@@ -14,6 +15,8 @@
 
 // declare global variables e.g., the time when the button is pressed 
 int pressed ;
+char morse[256];
+double time1, time_diff;
 
 // --------------------------------------------------------------------
 // declare the function definitions, e.g, decoder(...); and ther functions
@@ -29,8 +32,12 @@ int main() {
 
 	// Initialise the seven segment display.
 	seven_segment_init();
+	seven_segment_off();
 
-	// Turn the seven segment display off when the program starts.
+	//Displays the number 8 and a welcome message then clears the display
+	seven_segment_show(8);
+	printf("Welcome to MorsePi\n");
+	sleep_ms(1000);
 	seven_segment_off();
 
 	// Initialise the button's GPIO pin.
@@ -42,11 +49,10 @@ int main() {
 
 		while (gpio_get(BUTTON_PIN)){			
             // record how long the button is pressed
-            // .....
-			printf("This line is a test\n");  // you can remove this line
-			sleep_ms(150); // adjust the sleep_ms as required
+            time1 = (double) clock();
+			time1 = time1 / CLOCKS_PER_SEC;
 		} 
-        // check if the button press is a dot or a dash
+        time_diff = (((double) clock()) / CLOCKS_PER_SEC) - time1;
 		checkButton();
 	}
 }
@@ -55,8 +61,12 @@ void decoder(){
     // a function to be implemented
 }
 
-void checkButton(){
-
+void checkButton(double clock){
+	if (clock > 250) { 
+		morse[0] = '-'
+	} else {
+		morse[0] = '.'
+	}
     // a function to be implemented
 }
 

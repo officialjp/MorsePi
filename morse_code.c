@@ -29,8 +29,12 @@ int main() {
 
 	// Initialise the seven segment display.
 	seven_segment_init();
+	seven_segment_off();
 
-	// Turn the seven segment display off when the program starts.
+	//Displays the number 8 and a welcome message then clears the display
+	seven_segment_show(8);
+	printf("Welcome to MorsePi\n");
+	sleep_ms(1000);
 	seven_segment_off();
 
 	// Initialise the button's GPIO pin.

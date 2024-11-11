@@ -13,11 +13,70 @@
 
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
 
+#define MAX_SIZE			27 	// Max elements in the map
 // declare global variables e.g., the time when the button is pressed 
 char morse[256];
 bool isPressed;
 struct timeval start, end;
 double diff, startTime ,endTime;
+
+char keys[MAX_SIZE];
+char values[MAX_SIZE];
+
+int getIndex(char key[]){
+	for (int i = 0; i < MAX_SIZE; i++) {
+		if (strcmp(keys[i], key) == 0) {
+			return i;
+		}
+	}
+	return -1; // Key not found
+}
+
+int get(char key[]) { 
+	int index = getIndex(key);
+	if (index == -1) {
+		return -1;
+	} else {
+		return values[index];
+	}
+}
+
+void printMap() {
+	for (int i = 0; i < MAX_SIZE; i++) {
+		print("%s: %s\n", keys[i], values[i]);
+	}
+}
+
+void morseCodeToLetters(char code){
+	char morse[] = {
+		'.-', 			//A
+		'-...',			//B
+		'-.-.',			//C
+		'-..',			//D
+		'.',			//E
+		'..-.',			//F
+		'--.',			//G
+		'....',			//H
+		'..',			//I
+		'.---',			//J
+		'-.-',			//K
+		'.-..',			//L
+		'--',			//M
+		'-.',			//N
+		'---',			//O
+		'.--.',			//P
+		'--.-',			//Q
+		'.-.',			//R
+		'...',			//S
+		'-',			//T
+		'..-',			//U
+		'...-',			//V
+		'.--',			//W
+		'-..-',			//X
+		'-.--',			//Y
+		'--..'			//Z
+	};
+}
 
 // --------------------------------------------------------------------
 // declare the function definitions, e.g, decoder(...); and ther functions

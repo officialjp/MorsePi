@@ -14,9 +14,10 @@
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
 
 // declare global variables e.g., the time when the button is pressed 
-int pressed ;
 char morse[256];
-double time1, time_diff;
+bool isPressed;
+struct timeval start, end;
+double diff, startTime ,endTime;
 
 // --------------------------------------------------------------------
 // declare the function definitions, e.g, decoder(...); and ther functions
@@ -46,14 +47,19 @@ int main() {
 	gpio_pull_down(BUTTON_PIN); // Pull the button pin towards ground (with an internal pull-down resistor).
 
 	while (true) {
-
-		while (gpio_get(BUTTON_PIN)){			
-            // record how long the button is pressed
-            time1 = (double) clock();
-			time1 = time1 / CLOCKS_PER_SEC;
+		gettimeofday(&start, NULL);
+		while (gpio_get(BUTTON_PIN)) { 
+			startTime = start.tv_sec + start.tv_usec / 1000000.0;
+			isPressed = true;
 		} 
-        time_diff = (((double) clock()) / CLOCKS_PER_SEC) - time1;
-		checkButton();
+
+		if(isPressed){
+			gettimeofday(&end, NULL);
+			endTime = end.tv_sec + end.tv_usec / 1000000.0;
+			diff = endTime-startTime;
+			isPressed = false;
+			checkButton(diff);
+		}
 	}
 }
 
@@ -61,12 +67,22 @@ void decoder(){
     // a function to be implemented
 }
 
-void checkButton(double clock){
-	if (clock > 250) { 
-		morse[0] = '-'
-	} else {
-		morse[0] = '.'
+void debugArray() {
+	for(int i = 0; i<255; i++) {
+		printf("%c \n", morse[i]);
 	}
+}
+
+
+void checkButton(double clock){
+	if (clock >= 0.25) { 
+		char character[] = {'-'};
+		strcat(morse, character);
+	} else {
+		char character[] = {'.'};
+		strcat(morse, character);
+	}
+	//debugArray();
     // a function to be implemented
 }
 

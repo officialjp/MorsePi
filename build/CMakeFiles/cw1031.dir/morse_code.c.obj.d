@@ -16,7 +16,8 @@ CMakeFiles/cw1031.dir/morse_code.c.obj: \
  /usr/include/newlib/sys/timespec.h /usr/include/newlib/sys/_timespec.h \
  /usr/include/newlib/sys/_pthreadtypes.h /usr/include/newlib/sys/sched.h \
  /usr/include/newlib/machine/types.h /usr/include/newlib/sys/stdio.h \
- /usr/include/newlib/string.h /usr/include/newlib/sys/_locale.h \
+ /usr/include/newlib/time.h /usr/include/newlib/machine/time.h \
+ /usr/include/newlib/sys/_locale.h /usr/include/newlib/string.h \
  /usr/include/newlib/strings.h /usr/include/newlib/sys/string.h \
  /opt/pico-sdk/src/common/pico_stdlib_headers/include/pico/stdlib.h \
  /opt/pico-sdk/src/common/pico_base_headers/include/pico.h \

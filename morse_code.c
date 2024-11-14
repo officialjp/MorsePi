@@ -20,6 +20,8 @@ bool isPressed;
 struct timeval start, end;
 double diff, startTime ,endTime;
 
+
+//Hash map attempt start
 char keys[MAX_SIZE];
 char values[MAX_SIZE];
 

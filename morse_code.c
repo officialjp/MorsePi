@@ -19,25 +19,33 @@ struct timeval start, end;
 double diff, startTime ,endTime;
 
 void clearArray(char array[]) {
-	size_t n = sizeof array / sizeof *array;
-	for (int x = 0; x<n; x++){
+	int size = sizeOfArray(array);
+	for (int x = 0; x<size; x++){
 		array[x] = '\0';
 	}
 }
 
 void inputInArray(char array[],char input) {
-	size_t n = sizeof array / sizeof *array;
-	for (int x = 0; x<n; x++){
+	int size = sizeOfArray(array);
+	for (int x = 0; x<size; x++){
 		if (array[x] == '\0'){
 			array[x] = input;
 		}
 	}
 }
 
+int sizeOfArray(char array[]) {
+	if (array[0] != '\0') {
+		return sizeof(array)/sizeof(array[0]);
+	} else {
+		return 0;
+	}
+}
+
 int countItemsInArray(char array[]) {
 	int count = 0;
-	size_t n = sizeof array / sizeof *array;
-	for (int x = 0; x<n; x++){
+	int size = sizeOfArray(array);
+	for (int x = 0; x<size; x++){
 		if (array[x] != '\0' || array[x] != '/'){
 			count++;
 		}
@@ -48,12 +56,13 @@ int countItemsInArray(char array[]) {
 void morseCodeToLetters(){
 	const char *letter = "**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";
 	int index = 1;
+	int size = sizeOfArray(morse)
 	if (countItemsInArray(morse) < 1) {
 		clearArray(morse);
 		//red for invalid, green for valid rgb
 		//play negative buzzer sound
 	} else {
-		for (int i = 0; i<sizeof(morse); i++) {
+		for (int i = 0; i<size; i++) {
 			if (morse[i] == '.') {
 				index = index*2;
 			} else if (morse[i] == '-') {
@@ -115,22 +124,23 @@ int main() {
 }
 
 void debugArray(char array[]) {
-	size_t n = sizeof array / sizeof *array;
-	for(int i = 0; i<n; i++) {
+	int size = sizeOfArray(array);
+	for(int i = 0; i<size; i++) {
 		printf("%c \n", array[i]);
 	}
 }
 
 void displayAllItemsInArray(char array[]) {
-	size_t n = sizeof array / sizeof *array;
-	for(int i = 0; i<n; i++){
+	int size = sizeOfArray(array);
+	for(int i = 0; i<size; i++){
 		printf("%c", array[i]);
 	}
 	printf("\n");
 }
 
 void checkButton(double clock){
-	if ((countItemsInArray(letters) % 4) == 0) {
+	printf("%d",countItemsInArray(letters));
+	if (((countItemsInArray(letters) % 4) == 0) && countItemsInArray(letters) != 0) {
 		displayAllItemsInArray(letters);
 		//play short tune
 
@@ -147,6 +157,7 @@ void checkButton(double clock){
 		//terminate, green = continue).
 	} else {
 		if (countItemsInArray(morse) < 5) {
+			printf("%lf \n",clock);
 			if (clock > 4) { //potentiometer input
 				printf("Deez nuts"); //make buzzer stuff
 			//make the rgb red

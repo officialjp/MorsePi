@@ -29,7 +29,7 @@
 /** An array containing the pins for all segments. */
 static const unsigned int ALL_SEGMENTS[] = {SEGMENT_A, SEGMENT_B, SEGMENT_C, SEGMENT_D, SEGMENT_E, SEGMENT_F, SEGMENT_G};
 
-#define ALL_SEGMENTS_COUNT  32
+#define ALL_SEGMENTS_COUNT  7
 
 // You will need to extend the array to include more letters.
 //"**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";

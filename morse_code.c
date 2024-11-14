@@ -37,17 +37,17 @@ void morseCodeToLetters(char code){
 			index = (index*2)+1;
 		} else {
 			inputInArray(letters,letter[index])
+			displayLetter(index)
 			index = 1;
 		}
 	}
 }
 
-// declare the function definitions, e.g, decoder(...); and ther functions
-// given the user input, you can decode if the input is a character
-void decoder();
-
-// check if the button press is a dot or a dash
-void checkButton();
+void displayLetter(int index) {
+	seven_segment_off();
+	seven_segment_show(index);
+	sleep_ms(500);
+}
 
 int main() {
 	timer_hw->dbgpause = 0;
@@ -84,10 +84,6 @@ int main() {
 		}
 	}
 }		char character[] = {'.'};
-
-void decoder(){
-    // a function to be implemented
-}
 
 void debugArray() {
 	for(int i = 0; i<255; i++) {

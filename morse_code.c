@@ -19,14 +19,16 @@ struct timeval start, end;
 double diff, startTime ,endTime;
 
 void clearArray(char array[]) {
-	for (int x = 0; x<sizeof(array), x++){
-		array[x] = '';
+	size_t n = sizeof array / sizeof *array;
+	for (int x = 0; x<n; x++){
+		array[x] = '\0';
 	}
 }
 
 void inputInArray(char array[],char input) {
-	for (int x = 0; x<sizeof(array); x++){
-		if (array[x] == ''){
+	size_t n = sizeof array / sizeof *array;
+	for (int x = 0; x<n; x++){
+		if (array[x] == '\0'){
 			array[x] = input;
 		}
 	}
@@ -34,8 +36,9 @@ void inputInArray(char array[],char input) {
 
 int countItemsInArray(char array[]) {
 	int count = 0;
-	for (int x = 0; x<sizeof(array); x++){
-		if (array[x] != '' || array[x] != '/'){
+	size_t n = sizeof array / sizeof *array;
+	for (int x = 0; x<n; x++){
+		if (array[x] != '\0' || array[x] != '/'){
 			count++;
 		}
 	}
@@ -56,7 +59,7 @@ void morseCodeToLetters(){
 			} else if (morse[i] == '-') {
 				index = (index*2)+1;
 			} else {
-				inputInArray(letters,letter[index])
+				inputInArray(letters,letter[index]);
 				displayLetter(index);
 				index = 1;
 				//change rgb to green here
@@ -112,13 +115,15 @@ int main() {
 }
 
 void debugArray(char array[]) {
-	for(int i = 0; i<sizeof(array); i++) {
+	size_t n = sizeof array / sizeof *array;
+	for(int i = 0; i<n; i++) {
 		printf("%c \n", array[i]);
 	}
 }
 
 void displayAllItemsInArray(char array[]) {
-	for(int i = 0; i<sizeof(array); i++){
+	size_t n = sizeof array / sizeof *array;
+	for(int i = 0; i<n; i++){
 		printf("%c", array[i]);
 	}
 	printf("\n");

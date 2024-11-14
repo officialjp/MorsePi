@@ -1,4 +1,4 @@
-// Padded and checksummed version of: /user/HS401/ab04138/Group work/MorsePi/build/pico-sdk/src/rp2040/boot_stage2/bs2_default.bin
+// Padded and checksummed version of: /user/HS400/jp01964/MorsePi/build/pico-sdk/src/rp2040/boot_stage2/bs2_default.bin
 
 .cpu cortex-m0plus
 .thumb

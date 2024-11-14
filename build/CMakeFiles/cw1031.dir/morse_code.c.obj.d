@@ -1,9 +1,9 @@
 CMakeFiles/cw1031.dir/morse_code.c.obj: \
- /user/HS401/ab04138/Group\ work/MorsePi/morse_code.c \
- /usr/include/newlib/stdio.h /usr/include/newlib/_ansi.h \
- /usr/include/newlib/newlib.h /usr/include/newlib/_newlib_version.h \
- /usr/include/newlib/sys/config.h /usr/include/newlib/machine/ieeefp.h \
- /usr/include/newlib/sys/features.h /usr/include/newlib/sys/cdefs.h \
+ /user/HS400/jp01964/MorsePi/morse_code.c /usr/include/newlib/stdio.h \
+ /usr/include/newlib/_ansi.h /usr/include/newlib/newlib.h \
+ /usr/include/newlib/_newlib_version.h /usr/include/newlib/sys/config.h \
+ /usr/include/newlib/machine/ieeefp.h /usr/include/newlib/sys/features.h \
+ /usr/include/newlib/sys/cdefs.h \
  /usr/include/newlib/machine/_default_types.h \
  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stddef.h \
  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdarg.h \
@@ -26,9 +26,9 @@ CMakeFiles/cw1031.dir/morse_code.c.obj: \
  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdbool.h \
  /usr/include/newlib/assert.h \
  /usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h \
- /user/HS401/ab04138/Group\ work/MorsePi/build/generated/pico_base/pico/version.h \
+ /user/HS400/jp01964/MorsePi/build/generated/pico_base/pico/version.h \
  /opt/pico-sdk/src/common/pico_base_headers/include/pico/config.h \
- /user/HS401/ab04138/Group\ work/MorsePi/build/generated/pico_base/pico/config_autogen.h \
+ /user/HS400/jp01964/MorsePi/build/generated/pico_base/pico/config_autogen.h \
  /opt/pico-sdk/src/boards/include/boards/pico.h \
  /opt/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h \
  /opt/pico-sdk/src/rp2040/pico_platform/include/pico/platform.h \
@@ -68,4 +68,4 @@ CMakeFiles/cw1031.dir/morse_code.c.obj: \
  /opt/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/resets.h \
  /opt/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/resets.h \
  /opt/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
- /user/HS401/ab04138/Group\ work/MorsePi/includes/seven_segment.h
+ /user/HS400/jp01964/MorsePi/includes/seven_segment.h

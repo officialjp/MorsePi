@@ -50,7 +50,7 @@ void printMap() {
 }
 
 void morseCodeToLetters(char code){
-	char morse[] = {
+	static const char *morse[] = {
 		".-", 			//A
 		"-...",			//B
 		"-.-.",			//C

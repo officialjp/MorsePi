@@ -3,8 +3,6 @@
  * You are free to edit/create any functions and variables.
  * You can add extra C files if required.
 */
-
-
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
@@ -13,74 +11,39 @@
 
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
 
-#define MAX_SIZE			27 	// Max elements in the map
 // declare global variables e.g., the time when the button is pressed 
-char morse[256];
+char morse[4];
+char letters[4];
 bool isPressed;
 struct timeval start, end;
 double diff, startTime ,endTime;
 
 
-//Hash map attempt start
-char keys[MAX_SIZE];
-char values[MAX_SIZE];
-
-int getIndex(char key[]){
-	for (int i = 0; i < MAX_SIZE; i++) {
-		if (strcmp(keys[i], key) == 0) {
-			return i;
+void inputInArray(char array[],char input) {
+	for (int x = 0; x<sizeof(array); x++){
+		if (array[x] == ''){
+			array[x] = input;
 		}
-	}
-	return -1; // Key not found
-}
-
-int get(char key[]) { 
-	int index = getIndex(key);
-	if (index == -1) {
-		return -1;
-	} else {
-		return values[index];
-	}
-}
-
-void printMap() {
-	for (int i = 0; i < MAX_SIZE; i++) {
-		print("%s: %s\n", keys[i], values[i]);
 	}
 }
 
 void morseCodeToLetters(char code){
-	static const char *morse[] = {
-		".-", 			//A
-		"-...",			//B
-		"-.-.",			//C
-		"-..",			//D
-		".",			//E
-		"..-.",			//F
-		"--.",			//G
-		"....",			//H
-		"..",			//I
-		".---",			//J
-		"-.-",			//K
-		".-..",			//L
-		"--",			//M
-		"-.",			//N
-		"---",			//O
-		".--.",			//P
-		"--.-",			//Q
-		".-.",			//R
-		"...",			//S
-		"-",			//T
-		"..-",			//U
-		"...-",			//V
-		".--",			//W
-		"-..-",			//X
-		"-.--",			//Y
-		"--.."			//Z
-	};
+	const char *letter = "**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";
+	int index = 1;
+	for (int i = 0; i<sizeof(morse); i++) {
+		if (morse[i] == '.') {
+			index = index*2;
+		} else if (morse[i] == '-') {
+			index = (index*2)+1;
+		} else {
+			inputInArray(letters,letter[index])
+			index = 1;
+		}
+	}
 }
 
-// --------------------------------------------------------------------
+// ----------------------------------------------------------char character[] = {'/'};
+		strcat(morse, character);----------
 // declare the function definitions, e.g, decoder(...); and ther functions
 // given the user input, you can decode if the input is a character
 void decoder();
@@ -136,12 +99,12 @@ void debugArray() {
 
 
 void checkButton(double clock){
-	if (clock >= 0.25) { 
-		char character[] = {"-"};
-		strcat(morse, character);
+	if (clock >= 0.4) { 
+		inputInArray(morse, '/');
+	} else if (clock >= 0.25) {
+		inputInArray(morse, '-');
 	} else {
-		char character[] = {"."};
-		strcat(morse, character);
+		inputInArray(morse, '.');
 	}
 	//debugArray();
     // a function to be implemented

@@ -32,6 +32,7 @@ static const unsigned int ALL_SEGMENTS[] = {SEGMENT_A, SEGMENT_B, SEGMENT_C, SEG
 #define ALL_SEGMENTS_COUNT  7
 
 // You will need to extend the array to include more letters.
+//"**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";
 uint8_t values[] = {
     0b00000000,
     0b11101110,         // A

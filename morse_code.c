@@ -12,12 +12,18 @@
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
 
 // declare global variables e.g., the time when the button is pressed 
-char morse[4];
+char morse[5];
 char letters[4];
 bool isPressed;
 struct timeval start, end;
 double diff, startTime ,endTime;
 
+
+void clearArray(char array[]) {
+	for (int x = 0; x<sizeof(array), x++){
+		array[x] = '';
+	}
+}
 
 void inputInArray(char array[],char input) {
 	for (int x = 0; x<sizeof(array); x++){
@@ -27,18 +33,33 @@ void inputInArray(char array[],char input) {
 	}
 }
 
-void morseCodeToLetters(char code){
+int countItemsInArray(char array[]) {
+	int count = 0;
+	for (int x = 0; x<sizeof(array); x++){
+		if (array[x] != '' || array[x] != '/'){
+			count++;
+		}
+	}
+	return count;
+}
+
+void morseCodeToLetters(){
 	const char *letter = "**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";
 	int index = 1;
-	for (int i = 0; i<sizeof(morse); i++) {
-		if (morse[i] == '.') {
-			index = index*2;
-		} else if (morse[i] == '-') {
-			index = (index*2)+1;
-		} else {
-			inputInArray(letters,letter[index])
-			displayLetter(index)
-			index = 1;
+	if (countItemsInArray(morse) < 1) {
+		clearArray(morse);
+		//play negative buzzer sound
+	} else {
+		for (int i = 0; i<sizeof(morse); i++) {
+			if (morse[i] == '.') {
+				index = index*2;
+			} else if (morse[i] == '-') {
+				index = (index*2)+1;
+			} else {
+				inputInArray(letters,letter[index])
+				displayLetter(index);
+				index = 1;
+			}
 		}
 	}
 }
@@ -62,6 +83,10 @@ int main() {
 	printf("Welcome to MorsePi\n");
 	sleep_ms(1000);
 	seven_segment_off();
+
+	//clear the arrays
+	clearArray(morse);
+	clearArray(letters);
 
 	// Initialise the button"s GPIO pin.
 	gpio_init(BUTTON_PIN);
@@ -93,12 +118,20 @@ void debugArray() {
 
 
 void checkButton(double clock){
-	if (clock >= 0.4) { 
-		inputInArray(morse, '/');
-	} else if (clock >= 0.25) {
-		inputInArray(morse, '-');
+	if (countItemsInArray(morse) < 5) {
+		if (clock > 4) { //potentiometer input
+			printf("Deez nuts"); //make buzzer stuff
+		} else if (clock >= 0.4) { 
+			inputInArray(morse, '/');
+			morseCodeToLetters();
+		} else if (clock >= 0.25) {
+			inputInArray(morse, '-');
+		} else {
+			inputInArray(morse, '.');
+		}
 	} else {
-		inputInArray(morse, '.');
+		//make buzzer negative sound
+		clearArray(morse);
 	}
 	//debugArray();
     // a function to be implemented

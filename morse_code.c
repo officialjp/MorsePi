@@ -51,32 +51,32 @@ void printMap() {
 
 void morseCodeToLetters(char code){
 	char morse[] = {
-		'.-', 			//A
-		'-...',			//B
-		'-.-.',			//C
-		'-..',			//D
-		'.',			//E
-		'..-.',			//F
-		'--.',			//G
-		'....',			//H
-		'..',			//I
-		'.---',			//J
-		'-.-',			//K
-		'.-..',			//L
-		'--',			//M
-		'-.',			//N
-		'---',			//O
-		'.--.',			//P
-		'--.-',			//Q
-		'.-.',			//R
-		'...',			//S
-		'-',			//T
-		'..-',			//U
-		'...-',			//V
-		'.--',			//W
-		'-..-',			//X
-		'-.--',			//Y
-		'--..'			//Z
+		".-", 			//A
+		"-...",			//B
+		"-.-.",			//C
+		"-..",			//D
+		".",			//E
+		"..-.",			//F
+		"--.",			//G
+		"....",			//H
+		"..",			//I
+		".---",			//J
+		"-.-",			//K
+		".-..",			//L
+		"--",			//M
+		"-.",			//N
+		"---",			//O
+		".--.",			//P
+		"--.-",			//Q
+		".-.",			//R
+		"...",			//S
+		"-",			//T
+		"..-",			//U
+		"...-",			//V
+		".--",			//W
+		"-..-",			//X
+		"-.--",			//Y
+		"--.."			//Z
 	};
 }
 
@@ -102,7 +102,7 @@ int main() {
 	sleep_ms(1000);
 	seven_segment_off();
 
-	// Initialise the button's GPIO pin.
+	// Initialise the button"s GPIO pin.
 	gpio_init(BUTTON_PIN);
 	gpio_set_dir(BUTTON_PIN, GPIO_IN);
 	gpio_pull_down(BUTTON_PIN); // Pull the button pin towards ground (with an internal pull-down resistor).
@@ -137,10 +137,10 @@ void debugArray() {
 
 void checkButton(double clock){
 	if (clock >= 0.25) { 
-		char character[] = {'-'};
+		char character[] = {"-"};
 		strcat(morse, character);
 	} else {
-		char character[] = {'.'};
+		char character[] = {"."};
 		strcat(morse, character);
 	}
 	//debugArray();

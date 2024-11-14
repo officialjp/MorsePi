@@ -42,8 +42,6 @@ void morseCodeToLetters(char code){
 	}
 }
 
-// ----------------------------------------------------------char character[] = {'/'};
-		strcat(morse, character);----------
 // declare the function definitions, e.g, decoder(...); and ther functions
 // given the user input, you can decode if the input is a character
 void decoder();
@@ -85,7 +83,7 @@ int main() {
 			checkButton(diff);
 		}
 	}
-}
+}		char character[] = {'.'};
 
 void decoder(){
     // a function to be implemented

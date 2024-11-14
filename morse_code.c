@@ -154,14 +154,8 @@ void checkButton(double clock){
 				inputInArray(morse, '.');
 			}
 		} else {
-			if (clock >= 0.4 && clock <= 0.7) {
-				inputInArray(morse, '/');
-				morseCodeToLetters();
-			} else {
-				//rgb red
-				//make buzzer negative sound
-				clearArray(morse);
-			}
+			clearArray(morse);
+			//scream at user irl
 		}
 	}
 	//debugArray();

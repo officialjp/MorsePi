@@ -12,12 +12,11 @@
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
 
 // declare global variables e.g., the time when the button is pressed 
-char morse[5];
-char letters[4];
+char morse[124];
+char letters[124];
 bool isPressed;
 struct timeval start, end;
 double diff, startTime ,endTime;
-
 
 void clearArray(char array[]) {
 	for (int x = 0; x<sizeof(array), x++){
@@ -48,6 +47,7 @@ void morseCodeToLetters(){
 	int index = 1;
 	if (countItemsInArray(morse) < 1) {
 		clearArray(morse);
+		//red for invalid, green for valid rgb
 		//play negative buzzer sound
 	} else {
 		for (int i = 0; i<sizeof(morse); i++) {
@@ -59,6 +59,7 @@ void morseCodeToLetters(){
 				inputInArray(letters,letter[index])
 				displayLetter(index);
 				index = 1;
+				//change rgb to green here
 			}
 		}
 	}
@@ -108,30 +109,60 @@ int main() {
 			checkButton(diff);
 		}
 	}
-}		char character[] = {'.'};
+}
 
-void debugArray() {
-	for(int i = 0; i<255; i++) {
-		printf("%c \n", morse[i]);
+void debugArray(char array[]) {
+	for(int i = 0; i<sizeof(array); i++) {
+		printf("%c \n", array[i]);
 	}
 }
 
+void displayAllItemsInArray(char array[]) {
+	for(int i = 0; i<sizeof(array); i++){
+		printf("%c", array[i]);
+	}
+	printf("\n");
+}
 
 void checkButton(double clock){
-	if (countItemsInArray(morse) < 5) {
-		if (clock > 4) { //potentiometer input
-			printf("Deez nuts"); //make buzzer stuff
-		} else if (clock >= 0.4) { 
-			inputInArray(morse, '/');
-			morseCodeToLetters();
-		} else if (clock >= 0.25) {
-			inputInArray(morse, '-');
-		} else {
-			inputInArray(morse, '.');
-		}
+	if ((countItemsInArray(letters) % 4) == 0) {
+		displayAllItemsInArray(letters);
+		//play short tune
+
+		//Your program should count how many correct letters have been put in, ignore any 
+		//incorrect inputs, if the number of correct letters reaches four, the buzzer plays a 
+		//short tune, the program displays a decoded message on the console. The program 
+		//then prompts the user to decide whether they want to continue or exit the program.
+		//a.
+		//Left button = “Yes” to reset all components and continue;
+		//b.
+		//Right button = “No” to turn off all components and terminate the program;
+		//c.
+		//The RBG LED lights up briefly when the user is making the choice (red = 
+		//terminate, green = continue).
 	} else {
-		//make buzzer negative sound
-		clearArray(morse);
+		if (countItemsInArray(morse) < 5) {
+			if (clock > 4) { //potentiometer input
+				printf("Deez nuts"); //make buzzer stuff
+			//make the rgb red
+			} else if (clock >= 0.4) { 
+				inputInArray(morse, '/');
+				morseCodeToLetters();
+			} else if (clock >= 0.25) {
+				inputInArray(morse, '-');
+			} else {
+				inputInArray(morse, '.');
+			}
+		} else {
+			if (clock >= 0.4 && clock <= 0.7) {
+				inputInArray(morse, '/');
+				morseCodeToLetters();
+			} else {
+				//rgb red
+				//make buzzer negative sound
+				clearArray(morse);
+			}
+		}
 	}
 	//debugArray();
     // a function to be implemented

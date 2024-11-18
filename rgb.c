@@ -7,7 +7,6 @@
 #define G 12 
 #define B 11 
 
-#define BRIGHTNESS 50
 #define LOOP_SLEEP 10
 #define MAX_COLOUR_VALUE 255
 #define MAX_PWM_LEVEL 65535
@@ -39,7 +38,7 @@ void setup_rgb()
 
 // Allow a colour value [0,255] and scale it up to uint16_t [0,65535].
 // Then scale it by brightness (out of 100) and invert the value (LED low is ON).
-void show_rgb(int r, int g, int b)
+void show_rgb(int r, int g, int b, int BRIGHTNESS)
 {
     printf("Showing RGB: %u %u %u\n", r, g, b);
     pwm_set_gpio_level(R, ~(MAX_PWM_LEVEL * r / MAX_COLOUR_VALUE * BRIGHTNESS / 100));
@@ -49,7 +48,7 @@ void show_rgb(int r, int g, int b)
 
 // if direction is UP (which is true), the value of r,g or b will be increased
 // if direction is DOWN (which is false), the value of r,g or b will be decreased
-int loop_colour(int r, int g, int b, char colourToIncrement, bool direction)
+int loop_colour(int r, int g, int b, int brightness, char colourToIncrement, bool direction)
 {
     for (int i = 0; i < MAX_COLOUR_VALUE; i++)
     {
@@ -65,7 +64,7 @@ int loop_colour(int r, int g, int b, char colourToIncrement, bool direction)
             b = direction ? b + 1 : b - 1;
             break;
         }
-        show_rgb(r, g, b);
+        show_rgb(r, g, b, brightness);
         sleep_ms(LOOP_SLEEP);
     }
 

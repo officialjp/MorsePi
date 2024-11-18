@@ -9,7 +9,6 @@
 #include "pico/stdlib.h"
 #include "includes/seven_segment.h"
 #include "includes/potentiometer.h"
-#include "includes/rgb.h"
 #include "includes/buzzer.h"
 
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
@@ -17,6 +16,7 @@
 // declare global variables e.g., the time when the button is pressed 
 char morse[124];
 char letters[124];
+int mcdonalds[] = {262,294,330,466,523};
 bool isPressed;
 struct timeval start, end;
 double diff, startTime ,endTime;
@@ -25,6 +25,22 @@ void clearArray(char array[]) {
 	for (int x = 0; x<124; x++){
 		array[x] = '\0';
 	}
+}
+
+void playMcDonalds() {
+	buzzer_enable(mcdonalds[0],0.1);
+	sleep_ms(20);
+	buzzer_enable(mcdonalds[1],0.1);
+	sleep_ms(40);
+	buzzer_enable(mcdonalds[2],0.1);
+	sleep_ms(40);
+	buzzer_enable(mcdonalds[3],0.1);
+	sleep_ms(5);
+	buzzer_enable(mcdonalds[4],0.1);
+	sleep_ms(40);
+	buzzer_enable(mcdonalds[3],0.1);
+	sleep_ms(180);
+	buzzer_enable(0,0);
 }
 
 void inputInArray(char array[],char input) {
@@ -43,7 +59,6 @@ int countItemsInArray(char array[]) {
 			count++;
 		}
 	}
-	printf("\nCount: %d", count);
 	return count;
 }
 
@@ -86,6 +101,15 @@ int main() {
 	// Initialise the seven segment display.
 	seven_segment_init();
 	seven_segment_off();
+
+	//setting up all the components
+	buzzer_init();
+	playMcDonalds();
+	setup_rgb();
+	//potentiometer_init();
+	show_rgb(0,255,0,50);
+	sleep_ms(2000);
+	show_rgb(0,0,0,0);
 
 	//Displays the number 8 and a welcome message then clears the display
 	seven_segment_show(8);
@@ -141,15 +165,25 @@ void checkButton(double clock){
 		} else {
 			printf("Error! Too many morse values!\n");
 			clearArray(morse);
-			buzzer_enable(1250);
+			buzzer_enable(1250,0.1);
+			show_rgb(255,0,0,50);
+			sleep_ms(2000);
+			show_rgb(0,255,0,50);
+			buzzer_enable(0,0);
 			sleep_ms(1000);
-			buzzer_disable();
+			show_rgb(0,0,0,0);
 		}
 	} else if (clock >= 0.3) {
 		printf("-");
+		buzzer_enable(220,0.1);
+		sleep_ms(100);
+		buzzer_enable(0,0);
 		inputInArray(morse, '-');
 	} else {
 		printf(".");
+		buzzer_enable(440,0.1);
+		sleep_ms(100);
+		buzzer_enable(0,0);
 		inputInArray(morse, '.');
 	}
 }

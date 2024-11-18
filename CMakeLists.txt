@@ -6,5 +6,5 @@ project(cw1031 C CXX ASM)
 pico_sdk_init()
 
 add_executable(cw1031 morse_code.c potentiometer.c rgb.c buzzer.c)
-target_link_libraries(cw1031 pico_stdlib)
+target_link_libraries(cw1031 pico_stdlib hardware_pwm hardware_adc)
 

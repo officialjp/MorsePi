@@ -157,7 +157,7 @@ void displayAllItemsInArray(char array[]) {
 }
 
 void checkButton(double clock){
-	if (clock >= 0.4) { 
+	if (clock >= 0.7) { 
 		printf("/");
 		inputInArray(morse, '/');
 		if (countItemsInArray(morse) < 5) {

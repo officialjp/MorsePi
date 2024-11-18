@@ -62,6 +62,14 @@ int countItemsInArray(char array[]) {
 	return count;
 }
 
+int displayLetter(int index) {
+	seven_segment_off();
+	seven_segment_show(index);
+	clearArray(morse);
+	sleep_ms(500);
+	return 0;
+}
+
 void morseCodeToLetters(){
 	const char *letter = "**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";
 	int index = 1;
@@ -87,11 +95,49 @@ void morseCodeToLetters(){
 	}
 }
 
-void displayLetter(int index) {
-	seven_segment_off();
-	seven_segment_show(index);
-	clearArray(morse);
-	sleep_ms(500);
+void checkButton(double clock){
+	if (clock >= 0.4) { 
+		printf("/");
+		inputInArray(morse, '/');
+		if (countItemsInArray(morse) < 5) {
+			morseCodeToLetters();
+		} else {
+			printf("Error! Too many morse values!\n");
+			clearArray(morse);
+			buzzer_enable(1250,0.1);
+			show_rgb(255,0,0,50);
+			sleep_ms(2000);
+			show_rgb(0,255,0,50);
+			buzzer_enable(0,0);
+			sleep_ms(1000);
+			show_rgb(0,0,0,0);
+		}
+	} else if (clock >= 0.3) {
+		printf("-");
+		buzzer_enable(220,0.1);
+		sleep_ms(100);
+		buzzer_enable(0,0);
+		inputInArray(morse, '-');
+	} else {
+		printf(".");
+		buzzer_enable(440,0.1);
+		sleep_ms(100);
+		buzzer_enable(0,0);
+		inputInArray(morse, '.');
+	}
+}
+
+void debugArray(char array[]) {
+	for(int i = 0; i<124; i++) {
+		printf("%c \n", array[i]);
+	}
+}
+
+void displayAllItemsInArray(char array[]) {
+	for(int i = 0; i<124; i++){
+		printf("%c", array[i]);
+	}
+	printf("\n");
 }
 
 int main() {
@@ -140,50 +186,5 @@ int main() {
 			isPressed = false;
 			checkButton(diff);
 		}
-	}
-}
-
-void debugArray(char array[]) {
-	for(int i = 0; i<124; i++) {
-		printf("%c \n", array[i]);
-	}
-}
-
-void displayAllItemsInArray(char array[]) {
-	for(int i = 0; i<124; i++){
-		printf("%c", array[i]);
-	}
-	printf("\n");
-}
-
-void checkButton(double clock){
-	if (clock >= 0.4) { 
-		printf("/");
-		inputInArray(morse, '/');
-		if (countItemsInArray(morse) < 5) {
-			morseCodeToLetters();
-		} else {
-			printf("Error! Too many morse values!\n");
-			clearArray(morse);
-			buzzer_enable(1250,0.1);
-			show_rgb(255,0,0,50);
-			sleep_ms(2000);
-			show_rgb(0,255,0,50);
-			buzzer_enable(0,0);
-			sleep_ms(1000);
-			show_rgb(0,0,0,0);
-		}
-	} else if (clock >= 0.3) {
-		printf("-");
-		buzzer_enable(220,0.1);
-		sleep_ms(100);
-		buzzer_enable(0,0);
-		inputInArray(morse, '-');
-	} else {
-		printf(".");
-		buzzer_enable(440,0.1);
-		sleep_ms(100);
-		buzzer_enable(0,0);
-		inputInArray(morse, '.');
 	}
 }

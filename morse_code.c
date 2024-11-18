@@ -8,6 +8,9 @@
 #include <string.h>
 #include "pico/stdlib.h"
 #include "includes/seven_segment.h"
+#include "includes/potentiometer.h"
+#include "includes/rgb.h"
+#include "includes/buzzer.h"
 
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
 
@@ -138,7 +141,9 @@ void checkButton(double clock){
 		} else {
 			printf("Error! Too many morse values!\n");
 			clearArray(morse);
-			//play buzz
+			buzzer_enable(1250);
+			sleep_ms(1000);
+			buzzer_disable();
 		}
 	} else if (clock >= 0.3) {
 		printf("-");

@@ -19,58 +19,50 @@ struct timeval start, end;
 double diff, startTime ,endTime;
 
 void clearArray(char array[]) {
-	int size = sizeOfArray(array);
-	for (int x = 0; x<size; x++){
+	for (int x = 0; x<124; x++){
 		array[x] = '\0';
 	}
 }
 
 void inputInArray(char array[],char input) {
-	int size = sizeOfArray(array);
-	for (int x = 0; x<size; x++){
+	for (int x = 0; x<124; x++){
 		if (array[x] == '\0'){
 			array[x] = input;
+			break;
 		}
-	}
-}
-
-int sizeOfArray(char array[]) {
-	if (array[0] != '\0') {
-		return sizeof(array)/sizeof(array[0]);
-	} else {
-		return 0;
 	}
 }
 
 int countItemsInArray(char array[]) {
 	int count = 0;
-	int size = sizeOfArray(array);
-	for (int x = 0; x<size; x++){
-		if (array[x] != '\0' || array[x] != '/'){
+	for (int x = 0; x<124; x++){
+		if(array[x] != '\0' && array[x] != '/') {
 			count++;
 		}
 	}
+	printf("\nCount: %d", count);
 	return count;
 }
 
 void morseCodeToLetters(){
 	const char *letter = "**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";
 	int index = 1;
-	int size = sizeOfArray(morse)
 	if (countItemsInArray(morse) < 1) {
 		clearArray(morse);
 		//red for invalid, green for valid rgb
 		//play negative buzzer sound
 	} else {
-		for (int i = 0; i<size; i++) {
+		for (int i = 0; i<124; i++) {
 			if (morse[i] == '.') {
 				index = index*2;
 			} else if (morse[i] == '-') {
 				index = (index*2)+1;
 			} else {
 				inputInArray(letters,letter[index]);
+				printf("%c", letter[index]);
 				displayLetter(index);
 				index = 1;
+				break;
 				//change rgb to green here
 			}
 		}
@@ -80,6 +72,7 @@ void morseCodeToLetters(){
 void displayLetter(int index) {
 	seven_segment_off();
 	seven_segment_show(index);
+	clearArray(morse);
 	sleep_ms(500);
 }
 
@@ -98,8 +91,8 @@ int main() {
 	seven_segment_off();
 
 	//clear the arrays
-	clearArray(morse);
-	clearArray(letters);
+	// clearArray(morse);
+	// clearArray(letters);
 
 	// Initialise the button"s GPIO pin.
 	gpio_init(BUTTON_PIN);
@@ -124,57 +117,34 @@ int main() {
 }
 
 void debugArray(char array[]) {
-	int size = sizeOfArray(array);
-	for(int i = 0; i<size; i++) {
+	for(int i = 0; i<124; i++) {
 		printf("%c \n", array[i]);
 	}
 }
 
 void displayAllItemsInArray(char array[]) {
-	int size = sizeOfArray(array);
-	for(int i = 0; i<size; i++){
+	for(int i = 0; i<124; i++){
 		printf("%c", array[i]);
 	}
 	printf("\n");
 }
 
 void checkButton(double clock){
-	printf("%d",countItemsInArray(letters));
-	if (((countItemsInArray(letters) % 4) == 0) && countItemsInArray(letters) != 0) {
-		displayAllItemsInArray(letters);
-		//play short tune
-
-		//Your program should count how many correct letters have been put in, ignore any 
-		//incorrect inputs, if the number of correct letters reaches four, the buzzer plays a 
-		//short tune, the program displays a decoded message on the console. The program 
-		//then prompts the user to decide whether they want to continue or exit the program.
-		//a.
-		//Left button = “Yes” to reset all components and continue;
-		//b.
-		//Right button = “No” to turn off all components and terminate the program;
-		//c.
-		//The RBG LED lights up briefly when the user is making the choice (red = 
-		//terminate, green = continue).
-	} else {
+	if (clock >= 0.4) { 
+		printf("/");
+		inputInArray(morse, '/');
 		if (countItemsInArray(morse) < 5) {
-			printf("%lf \n",clock);
-			if (clock > 4) { //potentiometer input
-				printf("Deez nuts"); //make buzzer stuff
-			//make the rgb red
-			} else if (clock >= 0.4) { 
-				inputInArray(morse, '/');
-				morseCodeToLetters();
-			} else if (clock >= 0.25) {
-				inputInArray(morse, '-');
-			} else {
-				inputInArray(morse, '.');
-			}
+			morseCodeToLetters();
 		} else {
+			printf("Error! Too many morse values!\n");
 			clearArray(morse);
-			//scream at user irl
+			//play buzz
 		}
+	} else if (clock >= 0.3) {
+		printf("-");
+		inputInArray(morse, '-');
+	} else {
+		printf(".");
+		inputInArray(morse, '.');
 	}
-	//debugArray();
-    // a function to be implemented
 }
-

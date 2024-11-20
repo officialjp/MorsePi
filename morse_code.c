@@ -116,7 +116,7 @@ void morseCodeToLetters(){
                 //if the morse is invalid do the opposite
                 } else {
                 	show_rgb(255,0,0,50);
-                    buzzer_enable(1250,0,1);
+                    buzzer_enable(1250,0.1);
                     sleep_ms(150);
                     buzzer_enable(0,0);
                     printf("Invalid morse code!");
@@ -167,12 +167,21 @@ void checkButtonErrors() {
 
 void checkButton(double clock){
  	//checks if 4 correct letters have been input
-	if ((countItemsInArray(letters) % 4 ) == 0) && countItemsInArray(letters) > 0) {
+	if (((countItemsInArray(letters) % 4 ) == 0) && countItemsInArray(letters) > 0) {
         //if they have prompt the user with the left button being continue and the right button being stop
 		promptUser();
     } else {
         //checks the different clock times and does each action respectively i.e adding a dot or a dash
-        if (clock > 3.9) {
+		char changeTimeLimit;
+		unsigned int timeLimit;
+		printf("Change overall time limit per letter? Y/N");
+		scanf("%c", &changeTimeLimit);
+		if (changeTimeLimit == "Y") {
+			timeLimit = potentiometer_read(3) + 1; //should allow between 1 and 4
+		} else {
+			timeLimit = 4; //makes standard time 4
+		}		
+        if (clock > timeLimit) {
         	printf("Error! You took too long!\n");
             checkButtonErrors();
         } else if (clock >= 0.7) {

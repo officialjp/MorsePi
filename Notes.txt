@@ -1,3 +1,0 @@
-Error Handling
-MAybe make main.c file?
-Put same function types in same file e.g. mcdonalds tune in buzzer

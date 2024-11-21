@@ -21,7 +21,6 @@
 // declare global variables e.g., the time when the button is pressed 
 char morse[124];
 char letters[124];
-int mcdonalds[] = {262,294,330,466,523};
 bool isPressed;
 struct timeval start, end;
 double diff, startTime, endTime;
@@ -41,23 +40,6 @@ void displayAllItemsInArray(char array[]) {
 		printf("%c", array[i]);
 	}
 	printf("\n");
-}
-
-void playMcDonalds() {
-  	//plays the mcdonalds theme song
-	buzzer_enable(mcdonalds[0],0.1);
-	sleep_ms(25);
-	buzzer_enable(mcdonalds[1],0.1);
-	sleep_ms(50);
-	buzzer_enable(mcdonalds[2],0.1);
-	sleep_ms(50);
-	buzzer_enable(mcdonalds[3],0.1);
-	sleep_ms(5);
-	buzzer_enable(mcdonalds[4],0.1);
-	sleep_ms(50);
-	buzzer_enable(mcdonalds[3],0.1);
-	sleep_ms(225);
-	buzzer_enable(0,0);
 }
 
 void inputInArray(char array[],char input) {
@@ -210,13 +192,6 @@ void promptPotentiometer() {
 	scanf("%c", &changeTimeLimit);
 	if (changeTimeLimit == 'Y') {
 		timeLimit = potentiometer_read(3) + 1; //should allow between 1 and 4
-	}
-}
-
-void debugArray(char array[]) {
-  	//Prints out all elements in the array in each line
-	for(int i = 0; i<124; i++) {
-		printf("%c \n", array[i]);
 	}
 }
 

@@ -6,6 +6,8 @@
 // ------ You do NOT need to edit this file ---------------------------
 // --------------------------------------------------------------------
 
+int mcdonalds[] = {262,294,330,466,523};
+
 void buzzer_init() {
     gpio_init(BUZZER_PIN);
     gpio_set_dir(BUZZER_PIN, GPIO_OUT);
@@ -30,6 +32,23 @@ void buzzer_enable(unsigned int frequency, double duty) {
 }
 
 // --------------------------------------------------------------------
+
+void playMcDonalds() {
+  	//plays the mcdonalds theme song
+	buzzer_enable(mcdonalds[0],0.1);
+	sleep_ms(25);
+	buzzer_enable(mcdonalds[1],0.1);
+	sleep_ms(50);
+	buzzer_enable(mcdonalds[2],0.1);
+	sleep_ms(50);
+	buzzer_enable(mcdonalds[3],0.1);
+	sleep_ms(5);
+	buzzer_enable(mcdonalds[4],0.1);
+	sleep_ms(50);
+	buzzer_enable(mcdonalds[3],0.1);
+	sleep_ms(225);
+	buzzer_enable(0,0);
+}
 
 unsigned int pwm_set_freq_duty(
     unsigned int slice,

@@ -13,6 +13,8 @@
  * Compute (and set) PWM (pulse-width modulation) frequency and duty cycle for the specified frequency.
  * The return value is the computed PWM wrap value (which needn't necessarily be used).
  */
+
+void playMcDonalds();
 unsigned int pwm_set_freq_duty(
     /** The PWM generator "slice" to output the requested frequency on. */
     unsigned int slice,

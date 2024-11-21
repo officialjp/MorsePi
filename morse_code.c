@@ -1,8 +1,3 @@
-/**
- * The given template is a guideline for your coursework only.
- * You are free to edit/create any functions and variables.
- * You can add extra C files if required.
-*/
 #include <stdio.h>
 #include <time.h>
 #include "pico/stdlib.h"
@@ -36,6 +31,7 @@ int displayLetter(int index) {
 }
 
 void generalError() {
+	//this function is just a general error that will play a buzzer, show a red light and show an error on the seven segment display
 	seven_segment_show(24);
 	show_rgb(255,0,0,50);
     buzzer_enable(1250,0.1);
@@ -72,7 +68,7 @@ void morseCodeToLetters(){
 					sleep_ms(250);
 					show_rgb(0,0,0,0);
                 	break;
-                //if the morse is invalid do the opposite
+                //if the morse is invalid don't and call generalError
                 } else {
                 	generalError();
                     printf("Invalid morse code!");
@@ -93,7 +89,9 @@ void promptUser() {
     displayAllItemsInArray(letters);
 	playMcDonalds();
 	printf("Would you like to continue? Left = yes, Right = no!\n");
+	//check if button is pressed
 	while(true) {
+		//if button pressed is the no button, exit the program and turn off all components
 		if(gpio_get(RIGHT_PIN)) {
             show_rgb(255,0,0,50);
             printf("Exiting! the program");
@@ -103,6 +101,7 @@ void promptUser() {
 			buzzer_disable();
             exit(1);
         }
+		//if the button pressed is the yes button, continue running the morse decode algorithm
         if(gpio_get(BUTTON_PIN)) {
           	show_rgb(0,255,0,50);
             printf("Continuing! the program\n");
@@ -129,8 +128,7 @@ void checkButtonErrors() {
 }
 
 void checkButton(double clock){
- 	//checks if 4 correct letters have been input
-        //checks the different clock times and does each action respectively i.e adding a dot or a dash
+    //checks the different clock times and does each action respectively i.e adding a dot or a dash
     if (clock > timeLimit) {
         printf("Error! You took too long!\n");
         checkButtonErrors();
@@ -150,7 +148,9 @@ void checkButton(double clock){
 }
 
 void promptPotentiometer() { 
+	//changes the time limit of a letter by a given potentiometer input
 	show_rgb(0,0,255,50);
+	//asks the user if they would like this change
 	printf("Change overall time limit per letter? Left = yes, Right = no!\n");
 	while(true) {
 		if(gpio_get(RIGHT_PIN)) {
@@ -201,11 +201,14 @@ int main() {
 
     //While loop for left button
 	while (true) {
+		//checks the time using the computer clock
 		gettimeofday(&start, NULL);
 		gettimeofday(&end, NULL);
 		endTime = end.tv_sec + end.tv_usec / 1000000.0;
 		diff = endTime-startTime;
+		//if the time is above a certain inter-signal time it will decode the morse
 		if(diff > 0.7 && countItemsInArray(morse) > 0) {
+			//prints a "/" for clarity between letters and morse
 			printf("/");
     		inputInArray(morse, '/');
     		if (countItemsInArray(morse) < 5) {
@@ -219,9 +222,10 @@ int main() {
 		while (gpio_get(BUTTON_PIN)) { 
 			startTime = start.tv_sec + start.tv_usec / 1000000.0;
 			isPressed = true;
-		} 
+		}
+		//if there are 4 letters in the array prompt the user whether they would like to continue or not
 		if (countItemsInArray(letters) == 4) {
-        	//if they have prompt the user with the left button being continue and the right button being stop
+        	//if they have, prompt the user with the left button being continue and the right button being stop
 			promptUser();
 		}
 		//Uses that time and passes it into a function

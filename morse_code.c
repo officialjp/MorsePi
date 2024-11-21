@@ -152,10 +152,20 @@ void checkButton(double clock){
 }
 
 void promptPotentiometer() { 
-	printf("Change overall time limit per letter? Y/N");
-	scanf("%c", &changeTimeLimit);
+	printf("Change overall time limit per letter? Left = yes, Right = no!\n");
+	while(true) {
+		if(gpio_get(RIGHT_PIN)) {
+            printf("Time limit is 4 seconds\n");
+            break;
+        }
+        if(gpio_get(BUTTON_PIN)) {
+			timeLimit = potentiometer_read(3) + 1; //should allow between 1 and 4
+            printf("Time limit is %d\n", timeLimit);
+            break;
+		}
+    }
 	if (changeTimeLimit == 'Y') {
-		timeLimit = potentiometer_read(3) + 1; //should allow between 1 and 4
+		
 	}
 }
 

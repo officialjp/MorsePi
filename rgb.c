@@ -41,7 +41,6 @@ void setup_rgb()
 // Then scale it by brightness (out of 100) and invert the value (LED low is ON).
 void show_rgb(int r, int g, int b, int BRIGHTNESS)
 {
-    printf("Showing RGB: %u %u %u\n", r, g, b);
     pwm_set_gpio_level(R, ~(MAX_PWM_LEVEL * r / MAX_COLOUR_VALUE * BRIGHTNESS / 100));
     pwm_set_gpio_level(G, ~(MAX_PWM_LEVEL * g / MAX_COLOUR_VALUE * BRIGHTNESS / 100));
     pwm_set_gpio_level(B, ~(MAX_PWM_LEVEL * b / MAX_COLOUR_VALUE * BRIGHTNESS / 100));

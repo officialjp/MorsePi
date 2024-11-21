@@ -19,12 +19,11 @@
 #define RIGHT_PIN			22
 
 // declare global variables e.g., the time when the button is pressed 
-char morse[124];
-char letters[124];
+char morse[16];
+char letters[16];
 bool isPressed;
 struct timeval start, end;
 double diff, startTime, endTime;
-char changeTimeLimit;
 unsigned int timeLimit = 4;
 
 int displayLetter(int index) {
@@ -54,7 +53,7 @@ void morseCodeToLetters(){
 		generalError();
 	} else {
         //add the letter into an array of letters depending on which morse inputs it was given
-		for (int i = 0; i<124; i++) {
+		for (int i = 0; i<16; i++) {
 			if (morse[i] == '.') {
 				index = index*2;
 			} else if (morse[i] == '-') {
@@ -65,8 +64,11 @@ void morseCodeToLetters(){
                 	inputInArray(letters,letter[index]);
                 	printf("%c", letter[index]);
                 	displayLetter(index);
+					printf("\n");
                 	index = 1;
                 	show_rgb(0,255,0,50);
+					sleep_ms(250);
+					show_rgb(0,0,0,0);
                 	break;
                 //if the morse is invalid do the opposite
                 } else {
@@ -88,17 +90,19 @@ void promptUser() {
     buzzer_enable(0,0);
     displayAllItemsInArray(letters);
 	playMcDonalds();
-	printf("Would you like to continue? Left = yes, Right = no!");
+	printf("Would you like to continue? Left = yes, Right = no!\n");
 	while(true) {
 		if(gpio_get(RIGHT_PIN)) {
             show_rgb(255,0,0,50);
             printf("Exiting! the program");
             exit(1);
-            break;
         }
         if(gpio_get(BUTTON_PIN)) {
           	show_rgb(0,255,0,50);
-            printf("Continuing! the program");
+            printf("Continuing! the program\n");
+			sleep_ms(250);
+			show_rgb(0,0,0,0);
+			clearArray(letters);
             break;
 		}
     }
@@ -109,16 +113,16 @@ void checkButtonErrors() {
 	clearArray(morse);
 	buzzer_enable(1250,0.1);
 	show_rgb(255,0,0,50);
-	sleep_ms(2000);
+	sleep_ms(1000);
 	show_rgb(0,255,0,50);
 	buzzer_enable(0,0);
-	sleep_ms(1000);
+	sleep_ms(500);
 	show_rgb(0,0,0,0);
 }
 
 void checkButton(double clock){
  	//checks if 4 correct letters have been input
-	if (((countItemsInArray(letters) % 4 ) == 0) && countItemsInArray(letters) > 0) {
+	if (countItemsInArray(letters) == 4) {
         //if they have prompt the user with the left button being continue and the right button being stop
 		promptUser();
     } else {
@@ -152,6 +156,7 @@ void checkButton(double clock){
 }
 
 void promptPotentiometer() { 
+	show_rgb(0,0,255,50);
 	printf("Change overall time limit per letter? Left = yes, Right = no!\n");
 	while(true) {
 		if(gpio_get(RIGHT_PIN)) {
@@ -164,9 +169,7 @@ void promptPotentiometer() {
             break;
 		}
     }
-	if (changeTimeLimit == 'Y') {
-		
-	}
+	show_rgb(0,0,0,0);
 }
 
 int main() {
@@ -184,7 +187,7 @@ int main() {
 
 	//Displays the number 8 and a welcome message then clears the display
 	show_rgb(0,255,0,50);
-	seven_segment_show(8);
+	seven_segment_show(24);
 	printf("Welcome to MorsePi\n");
 	sleep_ms(1000);
 	seven_segment_off();

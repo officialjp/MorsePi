@@ -21,7 +21,7 @@ char letters[124];
 int mcdonalds[] = {262,294,330,466,523};
 bool isPressed;
 struct timeval start, end;
-double diff, startTime ,endTime;
+double diff, startTime, endTime;
 
 void clearArray(char array[]) {
   	//fills the array with empty characters
@@ -142,7 +142,7 @@ void promptUser() {
 		if(gpio_get(RIGHT_PIN)) {
             show_rgb(255,0,0,50);
             printf("Exiting! the program");
-            exit();
+            exit(1);
             break;
         }
         if(gpio_get(BUTTON_PIN)) {
@@ -176,7 +176,7 @@ void checkButton(double clock){
 		unsigned int timeLimit;
 		printf("Change overall time limit per letter? Y/N");
 		scanf("%c", &changeTimeLimit);
-		if (changeTimeLimit == "Y") {
+		if (changeTimeLimit == 'Y') {
 			timeLimit = potentiometer_read(3) + 1; //should allow between 1 and 4
 		} else {
 			timeLimit = 4; //makes standard time 4

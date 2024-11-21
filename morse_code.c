@@ -130,27 +130,22 @@ void checkButtonErrors() {
 
 void checkButton(double clock){
  	//checks if 4 correct letters have been input
-	if (countItemsInArray(letters) == 4) {
-        //if they have prompt the user with the left button being continue and the right button being stop
-		promptUser();
-    } else {
         //checks the different clock times and does each action respectively i.e adding a dot or a dash
-        if (clock > timeLimit) {
-        	printf("Error! You took too long!\n");
-            checkButtonErrors();
-    	} else if (clock >= 0.3) {
-    		printf("-");
-    		buzzer_enable(220,0.1);
-    		sleep_ms(250);
-    		buzzer_enable(0,0);
-    		inputInArray(morse, '-');
-    	} else {
-    		printf(".");
-    		buzzer_enable(220,0.1);
-    		sleep_ms(100);
-    		buzzer_enable(0,0);
-    		inputInArray(morse, '.');
-    	}
+    if (clock > timeLimit) {
+        printf("Error! You took too long!\n");
+        checkButtonErrors();
+    } else if (clock >= 0.3) {
+    	printf("-");
+    	buzzer_enable(220,0.1);
+    	sleep_ms(250);
+    	buzzer_enable(0,0);
+    	inputInArray(morse, '-');
+    } else {
+    	printf(".");
+    	buzzer_enable(220,0.1);
+        sleep_ms(100);
+    	buzzer_enable(0,0);
+    	inputInArray(morse, '.');
     }
 }
 
@@ -225,6 +220,10 @@ int main() {
 			startTime = start.tv_sec + start.tv_usec / 1000000.0;
 			isPressed = true;
 		} 
+		if (countItemsInArray(letters) == 4) {
+        	//if they have prompt the user with the left button being continue and the right button being stop
+			promptUser();
+		}
 		//Uses that time and passes it into a function
 		if(isPressed){
 			gettimeofday(&end, NULL);

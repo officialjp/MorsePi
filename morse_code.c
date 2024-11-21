@@ -5,7 +5,6 @@
 */
 #include <stdio.h>
 #include <time.h>
-#include <string.h>
 #include "pico/stdlib.h"
 #include "includes/seven_segment.h"
 #include "includes/potentiometer.h"
@@ -13,6 +12,7 @@
 #include "includes/rgb.h"
 #include <stdlib.h>
 #include <sys/time.h>
+#include "includes/array_logic.h"
 
 //declares the values for the right and left button pins
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)
@@ -26,42 +26,6 @@ struct timeval start, end;
 double diff, startTime, endTime;
 char changeTimeLimit;
 unsigned int timeLimit = 4;
-
-void clearArray(char array[]) {
-  	//fills the array with empty characters
-	for (int x = 0; x<124; x++){
-		array[x] = '\0';
-	}
-}
-
-void displayAllItemsInArray(char array[]) {
-  	//displays all the items in the array
-	for(int i = 0; i<124; i++){
-		printf("%c", array[i]);
-	}
-	printf("\n");
-}
-
-void inputInArray(char array[],char input) {
-  	//inputs an item on the next empty input in a character array
-	for (int x = 0; x<124; x++){
-		if (array[x] == '\0'){
-			array[x] = input;
-			break;
-		}
-	}
-}
-
-int countItemsInArray(char array[]) {
-  	//counts the number of valid characters in an array (not counting / for obvious reasons)
-	int count = 0;
-	for (int x = 0; x<124; x++){
-		if(array[x] != '\0' && array[x] != '/') {
-			count++;
-		}
-	}
-	return count;
-}
 
 int displayLetter(int index) {
   	//displays a letter given a certain index

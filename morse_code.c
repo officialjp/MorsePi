@@ -170,16 +170,15 @@ int main() {
 	//setting up all the components
 	buzzer_init();
 	setup_rgb();
-	//potentiometer_init();
-	show_rgb(0,255,0,50);
-	sleep_ms(2000);
-	show_rgb(0,0,0,0);
+	potentiometer_init();
 
 	//Displays the number 8 and a welcome message then clears the display
+	show_rgb(0,255,0,50);
 	seven_segment_show(8);
 	printf("Welcome to MorsePi\n");
 	sleep_ms(1000);
 	seven_segment_off();
+	show_rgb(0,0,0,0);
 
 	//Prompt for time in the potentiometer
 	promptPotentiometer();

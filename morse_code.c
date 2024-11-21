@@ -36,11 +36,13 @@ int displayLetter(int index) {
 }
 
 void generalError() {
+	seven_segment_show(24);
 	show_rgb(255,0,0,50);
     buzzer_enable(1250,0.1);
     sleep_ms(150);
     buzzer_enable(0,0);
 	show_rgb(0,0,0,0);
+	seven_segment_off();
 }
 
 void morseCodeToLetters(){
@@ -95,6 +97,10 @@ void promptUser() {
 		if(gpio_get(RIGHT_PIN)) {
             show_rgb(255,0,0,50);
             printf("Exiting! the program");
+			sleep_ms(2500);
+			show_rgb(0,0,0,0);
+			seven_segment_off();
+			buzzer_disable();
             exit(1);
         }
         if(gpio_get(BUTTON_PIN)) {
@@ -112,12 +118,14 @@ void checkButtonErrors() {
   	//an error function that will play if the code runs into an error
 	clearArray(morse);
 	buzzer_enable(1250,0.1);
+	seven_segment_show(24);
 	show_rgb(255,0,0,50);
 	sleep_ms(1000);
 	show_rgb(0,255,0,50);
 	buzzer_enable(0,0);
 	sleep_ms(500);
 	show_rgb(0,0,0,0);
+	seven_segment_off();
 }
 
 void checkButton(double clock){
@@ -130,15 +138,6 @@ void checkButton(double clock){
         if (clock > timeLimit) {
         	printf("Error! You took too long!\n");
             checkButtonErrors();
-        } else if (clock >= 0.7) {
-    		printf("/");
-    		inputInArray(morse, '/');
-    		if (countItemsInArray(morse) < 5) {
-    			morseCodeToLetters();
-    		} else {
-    			printf("Error! Too many morse values!\n");
-    			checkButtonErrors();
-    		}
     	} else if (clock >= 0.3) {
     		printf("-");
     		buzzer_enable(220,0.1);
@@ -195,6 +194,7 @@ int main() {
 
 	//Prompt for time in the potentiometer
 	promptPotentiometer();
+	sleep_ms(250);
 
 	// Initialise the buttons GPIO pins.
     gpio_init(RIGHT_PIN);
@@ -207,6 +207,19 @@ int main() {
     //While loop for left button
 	while (true) {
 		gettimeofday(&start, NULL);
+		gettimeofday(&end, NULL);
+		endTime = end.tv_sec + end.tv_usec / 1000000.0;
+		diff = endTime-startTime;
+		if(diff > 0.7 && countItemsInArray(morse) > 0) {
+			printf("/");
+    		inputInArray(morse, '/');
+    		if (countItemsInArray(morse) < 5) {
+    			morseCodeToLetters();
+    		} else {
+    			printf("Error! Too many morse values!\n");
+    			checkButtonErrors();
+    		}
+		}
         //Gets the time of when the button has started being held
 		while (gpio_get(BUTTON_PIN)) { 
 			startTime = start.tv_sec + start.tv_usec / 1000000.0;

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "hardware/pwm.h"
+#include "includes/rgb.h"
 #include "pico/stdlib.h"
 
 //Define pin numbers

@@ -10,6 +10,9 @@
 #include "includes/seven_segment.h"
 #include "includes/potentiometer.h"
 #include "includes/buzzer.h"
+#include "includes/rgb.h"
+#include <stdlib.h>
+#include <sys/time.h>
 
 //declares the values for the right and left button pins
 #define BUTTON_PIN			16	// Pin 21 (GPIO 16)

@@ -1,9 +1,6 @@
 #include <math.h>
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
-
-//#include "includes/potentiometer.h"   it doesn't like this line for some reason even thou its copied from the lab
-
 // --------------------------------------------------------------------
 
 // Notice that these constants are defined in the implementation file,
@@ -30,22 +27,9 @@
 
 // --------------------------------------------------------------------
 
-void potentiometer_init() {
-    adc_init();
-    adc_gpio_init(POTENTIOMETER_PIN);
-}
+void potentiometer_init();
 
-unsigned int potentiometer_read_raw() {
-    // Valid ADC pins are 26 to 29 inclusive (for inputs 0 to 3, respectively).
-    // We can trivialyl convert between GPIO pin and ADC pin by subtracting 26
-    // (to map 26-29 to 0-3).
-    adc_select_input(POTENTIOMETER_PIN - 26);
-
-    // adc_read obtains the 12-bit value (from 0 to 0xFFF) from the selected
-    // ADC input.
-    return adc_read();
-}
-
+unsigned int potentiometer_read_raw();
 /**
  * Map the specified value into the range [min, max] (assuming it was previously
  * in the range [original_min, original_max].)
@@ -62,26 +46,8 @@ int map(
     int original_max,
     int min,
     int max
-) {
-    int original_range = original_max - original_min;
-    int range = max - min;
-
-    return (value - original_min) * range / original_range + min;
-}
+);
 
 /** Clamp the specified value into the range [min, max]. */
-int clamp(int value, int min, int max) {
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
-}
-
-unsigned int potentiometer_read(unsigned int limit) {
-    // Map the raw value from the MIN and MAX above into the range
-    // [0, limit] and return it.
-    return map(
-        clamp(potentiometer_read_raw(), POTENTIOMETER_MIN, POTENTIOMETER_MAX),
-        POTENTIOMETER_MIN, POTENTIOMETER_MAX,
-        0, limit
-    );
-}
+int clamp(int value, int min, int max);
+unsigned int potentiometer_read(unsigned int limit);

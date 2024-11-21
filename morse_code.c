@@ -25,6 +25,8 @@ int mcdonalds[] = {262,294,330,466,523};
 bool isPressed;
 struct timeval start, end;
 double diff, startTime, endTime;
+char changeTimeLimit;
+unsigned int timeLimit = 4;
 
 void clearArray(char array[]) {
   	//fills the array with empty characters
@@ -88,6 +90,14 @@ int displayLetter(int index) {
 	return 0;
 }
 
+void generalError() {
+	show_rgb(255,0,0,50);
+    buzzer_enable(1250,0.1);
+    sleep_ms(150);
+    buzzer_enable(0,0);
+	show_rgb(0,0,0,0);
+}
+
 void morseCodeToLetters(){
   	//searches the tree for the correct letter given a morse code
 	const char *letter = "**ETIANMSURWDKGOHVF?L?PJBXCYZQ??";
@@ -95,11 +105,7 @@ void morseCodeToLetters(){
     //if the array is invalid and has less than 1 morse character run an error
 	if (countItemsInArray(morse) < 1) {
 		clearArray(morse);
-		show_rgb(255,0,0,50);
-        buzzer_enable(1250,0.1);
-        sleep_ms(150);
-        buzzer_enable(0,0);
-		show_rgb(0,0,0,0);
+		generalError();
 	} else {
         //add the letter into an array of letters depending on which morse inputs it was given
 		for (int i = 0; i<124; i++) {
@@ -118,12 +124,8 @@ void morseCodeToLetters(){
                 	break;
                 //if the morse is invalid do the opposite
                 } else {
-                	show_rgb(255,0,0,50);
-                    buzzer_enable(1250,0.1);
-                    sleep_ms(150);
-                    buzzer_enable(0,0);
+                	generalError();
                     printf("Invalid morse code!");
-                    show_rgb(0,0,0,0);
                     clearArray(morse);
                     break;
                 }
@@ -175,15 +177,6 @@ void checkButton(double clock){
 		promptUser();
     } else {
         //checks the different clock times and does each action respectively i.e adding a dot or a dash
-		char changeTimeLimit;
-		unsigned int timeLimit;
-		printf("Change overall time limit per letter? Y/N");
-		scanf("%c", &changeTimeLimit);
-		if (changeTimeLimit == 'Y') {
-			timeLimit = potentiometer_read(3) + 1; //should allow between 1 and 4
-		} else {
-			timeLimit = 4; //makes standard time 4
-		}		
         if (clock > timeLimit) {
         	printf("Error! You took too long!\n");
             checkButtonErrors();
@@ -210,6 +203,14 @@ void checkButton(double clock){
     		inputInArray(morse, '.');
     	}
     }
+}
+
+void promptPotentiometer() { 
+	printf("Change overall time limit per letter? Y/N");
+	scanf("%c", &changeTimeLimit);
+	if (changeTimeLimit == 'Y') {
+		timeLimit = potentiometer_read(3) + 1; //should allow between 1 and 4
+	}
 }
 
 void debugArray(char array[]) {
@@ -240,6 +241,9 @@ int main() {
 	printf("Welcome to MorsePi\n");
 	sleep_ms(1000);
 	seven_segment_off();
+
+	//Prompt for time in the potentiometer
+	promptPotentiometer();
 
 	// Initialise the buttons GPIO pins.
     gpio_init(RIGHT_PIN);

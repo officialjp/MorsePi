@@ -7,18 +7,6 @@
 
 #define BUZZER_PIN      17      // Pin 22 (GPIO 17)
 
-// ----- add more music notes in here -----
-#define E3              165
-#define F3              175
-#define G3              196     
-#define A3              220    
-#define B3              247    
-#define C4              262    
-
-#define D8              4699
-#define F3              175
-
-
 // --------------------------------------------------------------------
 
 /**

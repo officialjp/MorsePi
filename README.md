@@ -1,7 +1,3 @@
-Of course\! Here is a well-structured markdown description for your GitHub repository.
-
------
-
 # Pico Morse Code Decoder 🎶
 
 > A simple, C-based Morse Code decoder for the Raspberry Pi Pico that uses a button for input and provides feedback via a 7-segment display, an LED, and a piezo buzzer.
